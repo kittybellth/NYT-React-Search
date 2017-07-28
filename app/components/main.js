@@ -4,10 +4,12 @@ import createReactClass from 'create-react-class';
 
 // Here we include all of the sub-components
 import Search from "./children/search";
+import Results from "./children/Results";
 
 
 // Helper for making AJAX requests to our API
 import helpers from "./utils/helpers";
+
 
 // Creating the Main component
 const Main = createReactClass({
@@ -17,21 +19,20 @@ const Main = createReactClass({
       return { searchTopic: "", searchStartYear: "", searchEndYear: "", results: [], saved: [] };
     },
 
+    // If the component changes (i.e. if a search is entered)...
     componentDidUpdate: function() {
-      // Run the query for the address
-      helpers.runQuery(this.state.searchTopic, this.state.searchStartYear, this.state.searchEndYear)
-      .then(function(data) {
-        console.log(data);
-        // if (data !== this.state.results) {
-        //   console.log("Address", data);
-        // }
-      });
+    
     },
 
     // This function allows childrens to update the parent.
-    setTerm: function(topic, startYear, endYear) {
-      this.setState({ searchTopic: topic, searchStartYear: startYear, searchEndYear: endYear });
+    setResults: function(results) {
+      this.setState({ results: results });
     },
+
+    setSaved: function(savedNews) {
+      this.setState({ saved: savedNews });
+    },
+
     // Here we render the function
     render: function() {
       return (
@@ -41,7 +42,12 @@ const Main = createReactClass({
             <p className="text-center">Seach and annotate articles of interest!</p>
         </div>
         <div className="col-md-10 col-md-offset-1">
-            <Search setTerm={this.setTerm}/>
+            <Search setResults={this.setResults}/>
+        </div>
+        <div className="col-md-10 col-md-offset-1">
+            <Results results={this.state.results}
+              setSaved={this.state.setSaved}  
+            />
         </div>
       </div>
     );

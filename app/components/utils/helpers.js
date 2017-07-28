@@ -21,8 +21,23 @@ const helper = {
     return axios.get(queryURL).then(function(res) {
       // If get a result, return that result's formatted address property
       if (res.data.response.docs[0]) {
-        
-        return res.data.response.docs;
+        let news = []
+          class newsInfo {
+                constructor(snippet, headline, url, date ){
+                  this.snippet = snippet;
+                  this.headline = headline;
+                  this.url = url;
+                  this.date = date;
+                };
+          };
+         for(let i = 0; i < 5; i++){
+            const snippet = res.data.response.docs[i].snippet;
+            const headline = res.data.response.docs[i].headline.main;
+            const url = res.data.response.docs[i].web_url;
+            const date = res.data.response.docs[i].pub_date;
+            news.push(new newsInfo(snippet, headline, url, date));
+         }
+          return (news);
       }
       // If we don't get any results, return an empty string
       return "";

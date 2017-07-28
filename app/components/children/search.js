@@ -2,8 +2,8 @@
 import React from "react";
 import createReactClass from 'create-react-class';
 
-// Here we include all of the sub-components
-import Results from "./Results";
+// Helper for making AJAX requests to our API
+import helpers from "../utils/helpers";
 
 // Creating the Form component
 const Search = createReactClass({
@@ -32,17 +32,20 @@ const Search = createReactClass({
         // clicking the button
         e.preventDefault();
 
+        // Run the query for the address
+        helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear)
+        .then(function(data) {
+            this.props.setResults(data);
+        }.bind(this));
         // Set the parent to have the search term
-        this.props.setTerm(this.state.topic, this.state.startYear, this.state.endYear);
         this.setState({ topic: "", startYear: "", endYear: "" });
     },
     // Here we describe this component's render method
 
     render: function() {
         return (
-            <div>
                 <div className="panel panel-default">
-                    <div className="panel-heading text-center">Search</div>
+                    <div className="panel-heading text-center"><h5>Search</h5></div>
                     <div className="panel-body">
                         <form className="form-horizontal"
                         onSubmit={this.handleSubmit}>
@@ -90,14 +93,11 @@ const Search = createReactClass({
                                 </button>
                             </div>
                         </div>
-                        </form>
-                        
+                        </form>     
                     </div>
                 </div>
-                <Results />
-            </div>
-    );
-  }
+            );
+    }
 });
 
 module.exports = Search;
