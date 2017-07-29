@@ -2,6 +2,9 @@
 import React from "react";
 import createReactClass from 'create-react-class';
 
+// Helper for making AJAX requests to our API
+import helpers from "../utils/helpers";
+
 
 const Results = createReactClass({
 
@@ -18,11 +21,14 @@ const Results = createReactClass({
         // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
         // clicking the button
         e.preventDefault();
-
         //grab number to get news from props then post to the server
         let newsNum = e.target.value;
-        console.log(newsNum);
-        console.log(this.props.results[newsNum]);
+
+            // Run the query for the "POST" to the server
+            helpers.postNews(this.props.results[newsNum])
+            // .then(function(data) {
+
+            // }.bind(this));
     },
 
     render: function() {

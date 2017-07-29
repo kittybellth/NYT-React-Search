@@ -22,27 +22,27 @@ const helper = {
       // If get a result, return that result's formatted address property
       if (res.data.response.docs[0]) {
         let news = []
-          class newsInfo {
-                constructor(snippet, headline, url, date ){
-                  this.snippet = snippet;
-                  this.headline = headline;
-                  this.url = url;
-                  this.date = date;
-                };
-          };
+          // class newsInfo {
+          //       constructor(snippet, headline, url, date ){
+          //         this.snippet = snippet;
+          //         this.headline = headline;
+          //         this.url = url;
+          //         this.date = date;
+          //       };
+          // };
          for(let i = 0; i < 5; i++){
             const snippet = res.data.response.docs[i].snippet;
             const headline = res.data.response.docs[i].headline.main;
             const url = res.data.response.docs[i].web_url;
             const date = res.data.response.docs[i].pub_date;
-            news.push(new newsInfo(snippet, headline, url, date));
+            news.push({snippet: snippet, headline: headline, url: url, date: date});
          }
           return (news);
       }
       // If we don't get any results, return an empty string
       return "";
     });
-//   },
+  },
 
   // This function hits our own server to retrieve the record of query results
 //   getHistory: function() {
@@ -50,8 +50,11 @@ const helper = {
 //   },
 
   // This function posts new searches to our database.
-//   postHistory: function(location) {
-//     return axios.post("/api", { location: location });
+  postNews: (news)=>{
+    console.log(news)
+    return axios.post("/news/save", { data: news }).then((data)=>{ 
+      return console.log(data.data);
+    });
   }
 };
 

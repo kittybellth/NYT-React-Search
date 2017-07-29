@@ -31,8 +31,7 @@ const Search = createReactClass({
         // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
         // clicking the button
         e.preventDefault();
-
-        // Run the query for the address
+        // Run the query for the news
         helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear)
         .then(function(data) {
             this.props.setResults(data);
@@ -88,7 +87,9 @@ const Search = createReactClass({
                             <div className="col-md-2 col-md-offset-5 text-center">
                                 <button 
                                 className="btn btn-default btn-lg" 
-                                type="submit">
+                                type="submit"
+                                id="submit"
+                                >
                                 Search
                                 </button>
                             </div>
