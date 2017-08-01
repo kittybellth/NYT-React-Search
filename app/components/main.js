@@ -40,13 +40,15 @@ const Main = createReactClass({
         <div className="jumbotron">
             <h1 className="text-center"><ins>New York Times Article Scrubber</ins></h1>
             <p className="text-center">Seach and annotate articles of interest!</p>
+            <p></p>
         </div>
         <div className="col-md-10 col-md-offset-1">
             <Search setResults={this.setResults}/>
         </div>
         <div className="col-md-10 col-md-offset-1">
             <Results results={this.state.results}
-              setSaved={this.state.setSaved}  
+              saved={this.state.saved}
+              setSaved={this.setSaved}  
             />
         </div>
       </div>

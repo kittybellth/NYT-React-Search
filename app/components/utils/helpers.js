@@ -53,7 +53,7 @@ const helper = {
   postNews: (news)=>{
     console.log(news)
     return axios.post("/news/save", { data: news }).then((data)=>{ 
-      return console.log(data.data);
+      return (data.data);
     });
   }
 };

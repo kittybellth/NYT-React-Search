@@ -1,11 +1,15 @@
+//require all credentials info
+require('dotenv').config()
+
 // Include Server Dependencies
 const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require ("mongoose");
 
-// Require News Schema
-const News = require ("./models/News");
+
+// Require controller
+const dbController = require ("./controller/dbController");
 
 // Create Instance of Express
 const app = express();
@@ -44,25 +48,7 @@ app.get("/", (req, res)=> {
 
 
 // This is the route we will send POST requests to save each news.
-app.post("/news/save", (req, res)=> {
-  console.log(req.body.data);
-
-  // Here we'll save the news based on the JSON input.
-
-  var entry = new News(req.body.data);
-    // Now, save that entry to the db
-    entry.save(function(err, doc) {
-      // Log any errors
-      if (err) {
-      console.log(err);
-      }
-      // Or log the doc
-      else { 
-      res.json(doc._id);      
-      }
-    });
-});
-
+app.post("/news/save", dbController.save);
 
 // Listener
 app.listen(PORT, function() {
