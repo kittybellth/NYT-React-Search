@@ -1,24 +1,25 @@
 // Include React
-// import React from "react";
 import React, { Component } from 'react';
-import createReactClass from 'create-react-class';
 
 // Helper for making AJAX requests to our API
 import helpers from "../utils/helpers";
 
 
-const Results = createReactClass({
-
-    getInitialState: function() {
-    return {saved: []};
-    },
-
-     componentDidUpdate: function(prevProps, prevState) {
+class Results extends Component {
+    // Passing props in constructor arguments to access state from its parent.
+    constructor(props) {
+        super(props)
+        this.state = {
+            saved: []
+        }
         
-    },
+        //Binding "this" keyword to every function that might be called.
+        this.handleClick = this.handleClick.bind(this);
+        this.renderResults = this.renderResults.bind(this);
+    }
 
     //Whenever users click save
-    handleClick: function(e){
+    handleClick(e){
         // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
         // clicking the button
         e.preventDefault();
@@ -26,22 +27,28 @@ const Results = createReactClass({
         //grab number to get news from props then post to the server
         const newsNum = e.target.id;
         
-        // for UX purpose disable button after clicked.
+        // for a UX purpose disable button after click save.
         $("#"+newsNum).text("Saved!").addClass("disabled");
 
             // Run the query for the "POST" to the server
             helpers.postNews(this.props.results[newsNum])
             .then(function(data) {
-                //set saved state with mongo _id
-                let newSavedArr = this.props.saved.concat(data);
-                console.log(newSavedArr)
-                this.props.setSaved(newSavedArr);
-            }.bind(this));
-    },
 
-    render: function() {
+                //set saved state with mongo _id for passing 
+                // const newSavedArr = this.props.saved.concat(data);
+
+                //console.log(mongo db_.d if it successfully added to server. )
+                console.log(data)
+                // this.props.setSaved(newSavedArr);
+            }.bind(this));
+    }
+    renderResults() {
+
+        // render its content whenever there are some results came from its parent.
+        if(this.props.results[0]){
+            console.log("I ran");
         return(
-            <div className="panel panel-default">
+        <div className="panel panel-default">
                 <div className="panel-heading text-center"><h5>Results</h5></div>
                 <div className="panel-body">
                     {/*use a map function to loop through an array in JSX  */}
@@ -67,8 +74,17 @@ const Results = createReactClass({
                 </div>
             </div>
         )
+        }
     }
-});
 
+    render() {
+        return(
+            <div>
+            {this.renderResults()}
+            </div>
+        )
+    }
+};
 
-module.exports = Results;
+// Export the component
+export default Results;

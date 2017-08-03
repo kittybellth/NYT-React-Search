@@ -6,7 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require ("mongoose");
-
+const bluebird = require("bluebird");
 
 // Require controller
 const dbController = require ("./controller/dbController");
@@ -16,6 +16,8 @@ const app = express();
 // Sets an initial port. We'll use this later in our listener
 const PORT = process.env.PORT || 8080;
 
+//replaced mongoose promises with bluebird library
+mongoose.Promise = bluebird;
 // Run Morgan for Logging
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -28,17 +30,18 @@ app.use(express.static("public"));
 // -------------------------------------------------
 
 // MongoDB Configuration configuration
-mongoose.connect(process.env.DB_LOCAL);
+const promise = mongoose.connect(process.env.MONGODB_URI || process.env.DB_LOCAL, 
+  {useMongoClient: true});
+
 const db = mongoose.connection;
 
-db.on("error", function(err) {
-  console.log("Mongoose Error: ", err);
-});
+  db.on("error", function(err) {
+    console.log("Mongoose Error: ", err);
+  });
 
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
-
+  db.once("open", function() {
+    console.log("Mongoose connection successful.");
+  });
 // -------------------------------------------------
 
 // Main "/" Route. This will redirect the user to our rendered React application
@@ -46,6 +49,9 @@ app.get("/", (req, res)=> {
   res.sendFile(__dirname + "/public/index.html");
 });
 
+
+//This is the route that will send back all saved news to browsers
+app.get("/api/saved/news", dbController.getSavedNews);
 
 // This is the route we will send POST requests to save each news.
 app.post("/news/save", dbController.save);

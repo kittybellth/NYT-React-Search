@@ -22,14 +22,7 @@ const helper = {
       // If get a result, return that result's formatted address property
       if (res.data.response.docs[0]) {
         let news = []
-          // class newsInfo {
-          //       constructor(snippet, headline, url, date ){
-          //         this.snippet = snippet;
-          //         this.headline = headline;
-          //         this.url = url;
-          //         this.date = date;
-          //       };
-          // };
+        // Iterate through docs array and get only 5 news
          for(let i = 0; i < 5; i++){
             const snippet = res.data.response.docs[i].snippet;
             const headline = res.data.response.docs[i].headline.main;
@@ -45,9 +38,11 @@ const helper = {
   },
 
   // This function hits our own server to retrieve the record of query results
-//   getHistory: function() {
-//     return axios.get("/api");
-//   },
+  getSavedNews: function() {
+    return axios.get("/api/saved/news").then((data)=>{
+      return (data)
+    });
+  },
 
   // This function posts new searches to our database.
   postNews: (news)=>{
