@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "to create a single page app with react",
   "main": "server.js",
-  "repository": "https://github.com/kittybellth/NYT-React-Search.git",
+  "repository": "https://github.com/kotchaparn-w/NYT-React-Search.git",
   "scripts": {
     "dev": "webpack-dev-server --hot"
   },
