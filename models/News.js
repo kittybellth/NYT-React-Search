@@ -13,8 +13,12 @@ const NewsSchema = new Schema({
         type: String
     },
     date: {
-        type: Date
-    }
+        type: String
+    }, 
+    note: [{
+    type: Schema.Types.ObjectId,
+    ref: "Note"
+  }]
 });
 
 const News = mongoose.model("News", NewsSchema);

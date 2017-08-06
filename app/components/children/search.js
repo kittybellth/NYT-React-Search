@@ -15,7 +15,7 @@ class Search extends Component {
             topic: "", 
             startYear: "", 
             endYear: "", 
-            searchBtn: "Seach", 
+            searchBtn: " Seach", 
             isDisabled: "",
             results: []
         };
@@ -68,81 +68,113 @@ class Search extends Component {
 
         //reset all "saved news" button to "save"
         $(".disabled").removeClass("disabled").text("Save");
-        
-        //Disable button while AJAX being called for a UX purpose
-        this.setState({isDisabled: true, searchBtn: "Loading..."});
-            // Run the query for the news
-            helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear)
-            .then(function(data) {
-                // After get the news then set state results
-                this.setState({results: data});
-            }.bind(this));
+        //if users do not enter topic then alert
+        if(this.state.topic.length == 0){
+            return $(".modal").modal();
 
-        // Reset States
-        this.setState({ topic: "", startYear: "", endYear: "", searchBtn: "Search", isDisabled: ""});
+        //otherwise run query
+        }else{
+            //Disable button while AJAX being called for a UX purpose
+            this.setState({isDisabled: true, searchBtn: " Loading..."});
+                // Run the query for the news
+                helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear)
+                .then(function(data) {
+                    console.log(data);
+                    // After get the news then set state results
+                    this.setState({results: data});
+                }.bind(this));
+
+            // Reset States
+            this.setState({ topic: "", startYear: "", endYear: "", searchBtn: " Search", isDisabled: ""});
+        }
+    }
+    //for rendering alert
+    renderAlert(){
+        return (
+            <div className="modal">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 className="modal-title">Hello Users!</h4>
+                    </div>
+                    <div className="modal-body">
+                        <p>Please enter topic!</p>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
     // Here we describe this component's render method
-
     render() {
         return (
             <div>
-                <div className="panel panel-default">
-                    <div className="panel-heading text-center"><h5>Search</h5></div>
-                    <div className="panel-body">
-                        <form className="form-horizontal">
-                            <fieldset>
-                                <div className="form-group">
-                                    <label className="col-md-2 col-md-offset-1 control-label text-danger" id="topicText">Topic</label>
-                                    <div className="col-md-6">
-                                        <input type="text"
-                                        value={this.state.topic} 
-                                        className="form-control" 
-                                        id="topic"
-                                        onChange={this.handleTopicChange}
-                                        />
-                                    </div>                                             
-                                </div>
-                                <div className="form-group"> 
-                                    <label className="col-md-2 col-md-offset-1 control-label text-danger" id="startYearText">Start Year</label>
-                                    <div className="col-md-2">
-                                        <input type="text"
-                                        value={this.state.startYear} 
-                                        className="form-control" 
-                                        id="startYear"
-                                        placeholder="YYYY"
-                                        onChange={this.handleStartYearChange}
-                                        />
+                <div className="col-md-10 col-md-offset-1">
+                    <div className="panel panel-default">
+                        <div className="panel-heading text-center"><h5>Search</h5></div>
+                        <div className="panel-body">
+                            <form className="form-horizontal">
+                                <fieldset>
+                                    <div className="form-group">
+                                        <label className="col-md-2 col-md-offset-1 control-label text-danger" id="topicText">Topic</label>
+                                        <div className="col-md-6">
+                                            <input type="text"
+                                            value={this.state.topic} 
+                                            className="form-control" 
+                                            id="topic"
+                                            onChange={this.handleTopicChange}
+                                            />
+                                        </div>                                             
                                     </div>
-                                    <label className="col-md-2 control-label text-danger" id="endYearText">End Year</label>
-                                    <div className="col-md-2">
-                                        <input type="text" 
-                                        value={this.state.endYear} 
-                                        className="form-control" 
-                                        id="endYear"
-                                        placeholder="YYYY"
-                                        onChange={this.handleEndYearChange}
-                                        />  
+                                    <div className="form-group"> 
+                                        <label className="col-md-2 col-md-offset-1 control-label text-danger" id="startYearText">Start Year</label>
+                                        <div className="col-md-2">
+                                            <input type="text"
+                                            value={this.state.startYear} 
+                                            className="form-control" 
+                                            id="startYear"
+                                            placeholder="YYYY"
+                                            onChange={this.handleStartYearChange}
+                                            />
+                                        </div>
+                                        <label className="col-md-2 control-label text-danger" id="endYearText">End Year</label>
+                                        <div className="col-md-2">
+                                            <input type="text" 
+                                            value={this.state.endYear} 
+                                            className="form-control" 
+                                            id="endYear"
+                                            placeholder="YYYY"
+                                            onChange={this.handleEndYearChange}
+                                            />  
+                                        </div>
                                     </div>
+                                </fieldset>
+                                <div className="row">
+                                <div className="col-md-2 col-md-offset-5 text-center">
+                                    <button 
+                                    className="btn btn-default btn-lg" 
+                                    type="submit"
+                                    id="submit"
+                                    onClick={this.handleClick}
+                                    disabled={this.state.isDisabled}
+                                    >
+                                    <i className="fa fa-search" aria-hidden="true"></i>
+                                    {this.state.searchBtn}
+                                    </button>
                                 </div>
-                            </fieldset>
-                            <div className="row">
-                            <div className="col-md-2 col-md-offset-5 text-center">
-                                <button 
-                                className="btn btn-default btn-lg" 
-                                type="submit"
-                                id="submit"
-                                onClick={this.handleClick}
-                                disabled={this.state.isDisabled}
-                                >
-                                {this.state.searchBtn}
-                                </button>
                             </div>
+                            </form>     
                         </div>
-                        </form>     
                     </div>
                 </div>
                     {/*Passing results state and render results component  */}
-                    <Results results={this.state.results}/>         
+                    <Results results={this.state.results}/>
+                    <div>
+                    {this.renderAlert()}
+                    </div>  
             </div>
         );
     }

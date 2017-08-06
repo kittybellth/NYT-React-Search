@@ -8,13 +8,13 @@ const logger = require("morgan");
 const mongoose = require ("mongoose");
 const bluebird = require("bluebird");
 
-// Require controller
-const dbController = require ("./controller/dbController");
-
 // Create Instance of Express
 const app = express();
 // Sets an initial port. We'll use this later in our listener
 const PORT = process.env.PORT || 8080;
+
+//require routes from routes.js
+const routes = require("./routes/routes");
 
 //replaced mongoose promises with bluebird library
 mongoose.Promise = bluebird;
@@ -43,18 +43,8 @@ const db = mongoose.connection;
     console.log("Mongoose connection successful.");
   });
 // -------------------------------------------------
-
-// Main "/" Route. This will redirect the user to our rendered React application
-app.get("/", (req, res)=> {
-  res.sendFile(__dirname + "/public/index.html");
-});
-
-
-//This is the route that will send back all saved news to browsers
-app.get("/api/saved/news", dbController.getSavedNews);
-
-// This is the route we will send POST requests to save each news.
-app.post("/news/save", dbController.save);
+//using routes from routes.js
+app.use("/", routes);
 
 // Listener
 app.listen(PORT, function() {

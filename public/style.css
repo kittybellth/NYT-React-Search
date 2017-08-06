@@ -1,0 +1,13 @@
+.jumbotron {
+    padding-top: 5px;
+    padding-bottom: 10px;
+    /* background-color: white; */
+}
+
+.btn-lg {
+    margin: 5px;
+}
+
+.label-success {
+    margin-right: 10px; 
+}

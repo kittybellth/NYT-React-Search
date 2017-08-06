@@ -23,7 +23,6 @@ class Results extends Component {
         // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
         // clicking the button
         e.preventDefault();
-
         //grab number to get news from props then post to the server
         const newsNum = e.target.id;
         
@@ -34,19 +33,14 @@ class Results extends Component {
             helpers.postNews(this.props.results[newsNum])
             .then(function(data) {
 
-                //set saved state with mongo _id for passing 
-                // const newSavedArr = this.props.saved.concat(data);
-
                 //console.log(mongo db_.d if it successfully added to server. )
                 console.log(data)
-                // this.props.setSaved(newSavedArr);
             }.bind(this));
     }
     renderResults() {
 
         // render its content whenever there are some results came from its parent.
         if(this.props.results[0]){
-            console.log("I ran");
         return(
         <div className="panel panel-default">
                 <div className="panel-heading text-center"><h5>Results</h5></div>
@@ -79,7 +73,7 @@ class Results extends Component {
 
     render() {
         return(
-            <div>
+             <div className="col-md-10 col-md-offset-1">
             {this.renderResults()}
             </div>
         )

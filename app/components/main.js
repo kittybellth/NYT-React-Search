@@ -1,14 +1,21 @@
 // Include React
-import React from "react";
+import React, { Component }from "react";
 import Jumbotron from "./children/Jumbotron";
 
- const Main = props => (
-  <div>
-    <Jumbotron />
-    <div className="col-md-10 col-md-offset-1">
-      {props.children}
-    </div>
-  </div>
- );
+class Main extends Component {
+    constructor(props){
+        super(props)
+    } 
+    render(){
+        return(
+          <div>
+            {/*passing pathname to Jumbotron component  */}
+            <Jumbotron location={this.props.location.pathname}/>
+            {this.props.children}
+          </div>
+        )
+    }
+
+};
 
 export default Main;

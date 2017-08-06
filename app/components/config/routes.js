@@ -11,7 +11,8 @@ import Search from "../children/Search";
 
 const routes = (
     <BrowserRouter> 
-        <Main>
+        {/*Passing location to main component  */}
+        <Main location={location}>
             {/*Display main route with search component  */}
             <Route exact path="/" component={Search}/> 
             {/*Display savednews route with SavedNews component  */}
