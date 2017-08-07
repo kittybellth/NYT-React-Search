@@ -26,8 +26,10 @@ class Jumbotron extends Component {
     render(){
         return(
             <div className="jumbotron">
-                <h1 className="text-center"><i className="fa fa-newspaper-o" aria-hidden="true"></i>New York Times Article Scrubber</h1>
-                <p className="text-center">Seach and annotate articles of interest!</p>
+                <h1 className="text-center">
+                    <img src="../img/Newspaper.png"/>
+                    New York Times Article Scrubber
+                </h1>
                 <p className="text-center">
                     {this.renderBtn()}
                 </p>
