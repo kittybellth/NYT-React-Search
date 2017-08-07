@@ -10,7 +10,7 @@ module.exports = {
 
   // The plain compiled JavaScript will be output into this file
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "public/js"),
     filename: "bundle.js"
   },
 
