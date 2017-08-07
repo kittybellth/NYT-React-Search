@@ -20,11 +20,17 @@ const routes = require("./routes/routes");
 mongoose.Promise = bluebird;
 // Run Morgan for Logging
 app.use(logger("dev"));
+
+//Prevent 304 status code
+app.use(function(req, res, next) {
+  req.headers['if-none-match'] = 'no-match-for-this';
+  next();    
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-
 app.use(express.static("public"));
 
 // -------------------------------------------------

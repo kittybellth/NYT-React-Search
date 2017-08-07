@@ -4,7 +4,7 @@ module.exports = {
 
   // This is the entry point or start of our react applicaton
   entry: {
-    app: ["./app/app.js", "./app/components/main.js"]
+    app: ["./app/app.js"]
     // "./app/components/children/search.js"]
   },
 
