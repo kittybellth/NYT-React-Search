@@ -1,4 +1,4 @@
-const path = require("path");
+var path = require("path");
 
 module.exports = {
 
@@ -11,13 +11,14 @@ module.exports = {
   // The plain compiled JavaScript will be output into this file
   output: {
     path: path.resolve(__dirname, "public/js"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: '/'
   },
 
   // This ection for deveropment environment
   devServer: {
+    contentBase: path.join(__dirname, 'public'),
     publicPath: "/",
-    contentBase: "./public",
     historyApiFallback: true,
   },
   // This section desribes the transformations we will perform

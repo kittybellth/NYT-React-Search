@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require ("mongoose");
 const bluebird = require("bluebird");
+const path = require("path");
 
 // Create Instance of Express
 const app = express();
@@ -31,7 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(express.static("public"));
+app.use(express.static(__dirname + '/public'))
 
 // -------------------------------------------------
 
@@ -51,6 +52,12 @@ const db = mongoose.connection;
 // -------------------------------------------------
 //using routes from routes.js
 app.use("/", routes);
+
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
 
 // Listener
 app.listen(PORT, function() {

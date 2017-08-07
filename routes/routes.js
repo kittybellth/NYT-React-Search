@@ -12,12 +12,6 @@ app.get("/", (req, res)=> {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-//This is the route that will send back all saved news to browsers
-app.get("/api/saved/news", dbController.getSavedNews);
-
-// This is the route we will send POST requests to save each news.
-app.post("/news/save", dbController.save);
-
 // This is the route for handling delete news
 app.delete("/delete/news/:id", dbController.deleteNews);
 
