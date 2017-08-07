@@ -39,7 +39,7 @@ const helpers = {
             const snippet = res.data.response.docs[i].snippet;
             const headline = res.data.response.docs[i].headline.main;
             const url = res.data.response.docs[i].web_url;
-            const date = res.data.response.docs[i].pub_date.slice(0, 10);
+            const date = res.data.response.docs[i].pub_date;
             news.push({snippet: snippet, headline: headline, url: url, date: date});
          }
           return (news);
