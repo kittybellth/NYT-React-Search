@@ -16,7 +16,7 @@ const routes = (
             {/*Display main route with search component  */}
             <Route exact path="/" component={Search}/> 
             {/*Display savednews route with SavedNews component  */}
-            <Route path="/savednews" component={SavedNews} />
+            <Route exact path="/savednews" component={SavedNews} />
         </Main>
     </BrowserRouter>
 )

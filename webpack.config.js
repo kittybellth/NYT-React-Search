@@ -18,6 +18,7 @@ module.exports = {
   devServer: {
     publicPath: "/",
     contentBase: "./public",
+    historyApiFallback: true,
   },
   // This section desribes the transformations we will perform
   module: {
