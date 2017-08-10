@@ -5,6 +5,7 @@
   "main": "server.js",
   "repository": "https://github.com/kotchaparn-w/NYT-React-Search.git",
   "scripts": {
+    
     "dev": "webpack-dev-server --hot"
   },
   "author": "kittybellth <kittybell.th@gmail.com>",

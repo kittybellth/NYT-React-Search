@@ -2,7 +2,7 @@
 import React from "react";
 
 // Include the react-router-dom modules
-import { Route, BrowserRouter, Switch } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 
 // Reference the high-level components
 import Main from "../Main";
